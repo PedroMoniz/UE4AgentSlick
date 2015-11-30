@@ -57,7 +57,10 @@ FVector ABodyguard::GetNextPosition()
 
 void ABodyguard::MoveToPath()
 {
-    MoveTo(GetNextPosition());
+    FVector position = GetNextPosition();
+    if (position != GetActorLocation()) {
+        MoveTo(position);
+    }
 }
 
 void ABodyguard::MoveTo(FVector location)
