@@ -6,6 +6,7 @@
 
 const FName AAgentSlickPawn::MoveForwardBinding("MoveForward");
 const FName AAgentSlickPawn::MoveRightBinding("MoveRight");
+const FName AAgentSlickPawn::WalkSlowBinding("WalkSlow-KeyPressed");
 
 
 
@@ -43,6 +44,18 @@ void AAgentSlickPawn::SetupPlayerInputComponent(class UInputComponent* InputComp
 	// set up gameplay key bindings
 	InputComponent->BindAxis(MoveForwardBinding);
 	InputComponent->BindAxis(MoveRightBinding);
+	InputComponent->BindAction(WalkSlowBinding, IE_Pressed, this, &AAgentSlickPawn::WalkSlowlyPressed);
+	InputComponent->BindAction(WalkSlowBinding, IE_Released, this, &AAgentSlickPawn::WalkSlowlyReleased);
+}
+
+void AAgentSlickPawn::WalkSlowlyPressed() {
+	MoveSpeed = 500.0f;
+
+}
+
+
+void AAgentSlickPawn::WalkSlowlyReleased() {
+	MoveSpeed = 1000.0f;
 }
 
 void AAgentSlickPawn::Tick(float DeltaSeconds)
@@ -50,6 +63,7 @@ void AAgentSlickPawn::Tick(float DeltaSeconds)
 	// Find movement direction
 	const float ForwardValue = GetInputAxisValue(MoveForwardBinding);
 	const float RightValue = GetInputAxisValue(MoveRightBinding);
+	//find if walking slowly
 
 	// Clamp max size so that (X=1, Y=1) doesn't cause faster movement in diagonal directions
 	const FVector MoveDirection = FVector(ForwardValue, RightValue, 0.f).GetClampedToMaxSize(1.0f);

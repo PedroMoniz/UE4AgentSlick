@@ -33,13 +33,17 @@ public:
 	// Begin Actor Interface
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	UFUNCTION(BlueprintCallable, Category = Movement)
+		virtual void WalkSlowlyPressed();
+	UFUNCTION(BlueprintCallable, Category = Movement)
+		virtual void WalkSlowlyReleased();
 	// End Actor Interface
 
 
 	// Static names for axis bindings
 	static const FName MoveForwardBinding;
 	static const FName MoveRightBinding;
-
+	static const FName WalkSlowBinding;
 
 public:
 	/** Returns ShipMeshComponent subobject **/
