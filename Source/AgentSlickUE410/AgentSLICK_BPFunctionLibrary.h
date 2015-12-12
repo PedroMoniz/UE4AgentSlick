@@ -22,7 +22,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct FGuardChatWithTuxedo : public FTableRowBase
+struct FGuardChat : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 public:
