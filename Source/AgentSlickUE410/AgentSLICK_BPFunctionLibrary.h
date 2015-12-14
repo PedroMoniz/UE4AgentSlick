@@ -18,11 +18,22 @@ public:
 		FText ItemName;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Information System")
 		FText ItemDescription;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Information System")
+		FText AAnswer;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Information System")
+		FText AGuardAnswer;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Information System")
+		int32 AStyle;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Information System")
+		int32 AType;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Information System")
+		int32 Clothes;
+
 
 };
 
 USTRUCT(BlueprintType)
-struct FGuardChatWithTuxedo : public FTableRowBase
+struct FGuardChat : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 public:
