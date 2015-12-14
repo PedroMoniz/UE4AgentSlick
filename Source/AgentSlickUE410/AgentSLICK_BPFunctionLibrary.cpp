@@ -19,5 +19,6 @@ FString UAgentSLICK_BPFunctionLibrary::GetCurrentMapReference(AActor * sourceAct
 
 float UAgentSLICK_BPFunctionLibrary::GetAngleBetween(FVector vector1, FVector vector2)
 {
-    return FMath::RadiansToDegrees(acosf(FVector::DotProduct(vector1, vector2)));
+    float angle = acosf(FVector::DotProduct(vector1.GetSafeNormal(), vector2.GetSafeNormal()));
+    return FMath::RadiansToDegrees(angle);
 }
