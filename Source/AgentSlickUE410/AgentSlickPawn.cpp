@@ -12,12 +12,10 @@ const FName AAgentSlickPawn::WalkSlowBinding("WalkSlow-KeyPressed");
 
 AAgentSlickPawn::AAgentSlickPawn()
 {
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> ShipMesh(TEXT("/Game/TwinStick/Meshes/TwinStickUFO.TwinStickUFO"));
 	// Create the mesh component
-	ShipMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShipMesh"));
-	RootComponent = ShipMeshComponent;
-	ShipMeshComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
-	ShipMeshComponent->SetStaticMesh(ShipMesh.Object);
+	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CharacterMesh"));
+	RootComponent = MeshComponent;
+	MeshComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
 
 	// Create a camera boom...
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));

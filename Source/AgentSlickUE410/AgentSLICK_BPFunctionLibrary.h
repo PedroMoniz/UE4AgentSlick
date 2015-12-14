@@ -69,4 +69,5 @@ public:
     UFUNCTION(BlueprintPure, Category = TDLHelpers)
     static FString GetCurrentMapReference(AActor * sourceActor);
     
+    static float GetAngleBetween(FVector vector1, FVector vector2);
 };

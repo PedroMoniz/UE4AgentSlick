@@ -16,3 +16,8 @@ FString UAgentSLICK_BPFunctionLibrary::GetCurrentMapReference(AActor * sourceAct
     fullPath.ReplaceInline(*directoryPath, TEXT(""));
     return fullPath;
 }
+
+float UAgentSLICK_BPFunctionLibrary::GetAngleBetween(FVector vector1, FVector vector2)
+{
+    return FMath::RadiansToDegrees(acosf(FVector::DotProduct(vector1, vector2)));
+}

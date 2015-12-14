@@ -7,8 +7,8 @@
     <Property Name="Precompile" Value="False" />
   </Properties>
   <BuildProducts>
-    <BuildProduct Path="$(ProjectDir)/Binaries/Mac/UE4Editor-AgentSlickUE410-6451.dylib" Type="DynamicLibrary" />
-    <BuildProduct Path="$(ProjectDir)/Binaries/Mac/UE4Editor-AgentSlickUE410-6451.dsym" Type="SymbolFile" />
+    <BuildProduct Path="$(ProjectDir)/Binaries/Mac/UE4Editor-AgentSlickUE410.dylib" Type="DynamicLibrary" />
+    <BuildProduct Path="$(ProjectDir)/Binaries/Mac/UE4Editor-AgentSlickUE410.dsym" Type="SymbolFile" />
   </BuildProducts>
   <RuntimeDependencies />
   <AdditionalProperties />

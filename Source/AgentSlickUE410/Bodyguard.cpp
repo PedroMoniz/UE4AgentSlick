@@ -3,7 +3,6 @@
 #include "AgentSlickUE410.h"
 #include "Bodyguard.h"
 
-
 // Sets default values
 ABodyguard::ABodyguard()
 {
@@ -11,10 +10,11 @@ ABodyguard::ABodyguard()
     PrimaryActorTick.bCanEverTick = true;
     
     Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+    Mesh->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
     RootComponent = Mesh;
     
     FollowPath = true;
-    Speed = 10.0f;
+    Speed = 20.f;
     MinDistanceToPoint = 50.0f;
     
     FieldOfViewDistance = 200.0f;
@@ -33,9 +33,23 @@ void ABodyguard::Tick( float DeltaTime )
     
     DetectTarget();
     
-    if (FollowPath) {
-        MoveToPath();
+    if (TargetLocationSet) {
+        if (FVector::DistSquared(TargetLocation, GetActorLocation()) < MinDistanceToPoint * MinDistanceToPoint) {
+            TargetLocationSet = false;
+        }
+        MoveTo(TargetLocation, DeltaTime);
+    } else
+    {
+        if (FollowPath) {
+            MoveToPath(DeltaTime);
+        }
     }
+}
+
+void ABodyguard::GoToLocation(FVector location)
+{
+    TargetLocation = location;
+    TargetLocationSet = true;
 }
 
 FVector ABodyguard::GetNextPosition()
@@ -55,27 +69,60 @@ FVector ABodyguard::GetNextPosition()
     return GetActorLocation();
 }
 
-void ABodyguard::MoveToPath()
+void ABodyguard::MoveToPath(float DeltaTime)
 {
     FVector position = GetNextPosition();
     if (position != GetActorLocation()) {
-        MoveTo(position);
+        MoveTo(position, DeltaTime);
     }
 }
 
-void ABodyguard::MoveTo(FVector location)
+void ABodyguard::MoveTo(FVector location, float DeltaTime)
 {
-    FVector direction = (location - GetActorLocation()).GetSafeNormal();
-    direction *= Speed;
-    
-    SetActorLocationAndRotation(GetActorLocation() + direction, direction.Rotation());
+    const FVector direction = (location - GetActorLocation()).GetSafeNormal2D().GetClampedToMaxSize(1.0f) * Speed * DeltaTime;
+    DrawDebugPoint(
+                   GetWorld(),
+                   GetActorLocation() + direction,
+                   10,  					//size
+                   FColor(255,0,255)  //pink
+                   );
+    //    DrawDebugLine(
+    //                  GetWorld(),
+    //                  GetActorLocation(),
+    //                  GetActorLocation() + direction,
+    //                  FColor(255,0,0),
+    //                  false, -1, 0,
+    //                  12.333
+    //                  );
+    // If non-zero size, move this actor
+    if (direction.SizeSquared() > 0.0f)
+    {
+        SetActorLocationAndRotation(GetActorLocation() + direction, direction.Rotation());
+    }
+}
+
+float GetAngleBetween(FVector vector1, FVector vector2)
+{
+    return FMath::RadiansToDegrees(acosf(FVector::DotProduct(vector1, vector2)));
 }
 
 void ABodyguard::DetectTarget()
 {
-    if (Target != nullptr
-        && FVector::DistSquared(Target->GetActorLocation(), GetActorLocation()) < FieldOfViewDistance * FieldOfViewDistance ) {
-        OnTargetDetected();
+    DrawDebugSphere(
+                    GetWorld(),
+                    GetActorLocation(),
+                    FieldOfViewDistance,
+                    32,
+                    FColor(255,0,0)
+                    );
+    
+    //float deltaAngle = GetAngleBetween(GetActorForwardVector(), Target->GetActorLocation());
+    if (Target != nullptr)
+    {
+        if(FVector::DistSquared(Target->GetActorLocation(), GetActorLocation()) < FieldOfViewDistance * FieldOfViewDistance )
+        {
+            OnTargetDetected();
+        }
     }
 }
 

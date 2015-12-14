@@ -16,11 +16,16 @@ private:
     
     FVector GetNextPosition();
     
-    void MoveToPath();
+    void MoveTo(FVector position, float DeltaTime);
+    
+    void MoveToPath(float DeltaTime);
     
     int CurrentPositionIndex;
     
     void DetectTarget();
+    
+    FVector TargetLocation;
+    bool TargetLocationSet;
     
 public:
     // Sets default values for this actor's properties
@@ -31,9 +36,6 @@ public:
     
     // Called every frame
     virtual void Tick( float DeltaSeconds ) override;
-    
-    UFUNCTION(BlueprintCallable, Category = Path)
-    void MoveTo(FVector position);
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Path)
     TArray<class AActor *> Path;
@@ -59,4 +61,8 @@ public:
     /** Called when the target is spotted by the bodyguard */
     UFUNCTION(BlueprintNativeEvent, Category = Targeting)
     void OnTargetDetected();
+    
+    /** Called when the target is spotted by the bodyguard */
+    UFUNCTION(BlueprintCallable, Category = Targeting)
+    void GoToLocation(FVector location);
 };
