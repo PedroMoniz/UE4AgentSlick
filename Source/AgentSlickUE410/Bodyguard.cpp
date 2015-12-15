@@ -80,12 +80,12 @@ void ABodyguard::MoveToPath(float DeltaTime)
 void ABodyguard::MoveTo(FVector location, float DeltaTime)
 {
     const FVector direction = (location - GetActorLocation()).GetSafeNormal2D().GetClampedToMaxSize(1.0f) * Speed * DeltaTime;
-    DrawDebugPoint(
-                   GetWorld(),
-                   GetActorLocation() + direction,
-                   10,  					//size
-                   FColor(255,0,255)  //pink
-                   );
+    //    DrawDebugPoint(
+    //                   GetWorld(),
+    //                   GetActorLocation() + direction,
+    //                   10,  					//size
+    //                   FColor(255,0,255)  //pink
+    //                   );
     //    DrawDebugLine(
     //                  GetWorld(),
     //                  GetActorLocation(),
@@ -108,13 +108,13 @@ float GetAngleBetween(FVector vector1, FVector vector2)
 
 void ABodyguard::DetectTarget()
 {
-    DrawDebugSphere(
-                    GetWorld(),
-                    GetActorLocation(),
-                    FieldOfViewDistance,
-                    32,
-                    FColor(255,0,0)
-                    );
+    //    DrawDebugSphere(
+    //                    GetWorld(),
+    //                    GetActorLocation(),
+    //                    FieldOfViewDistance,
+    //                    32,
+    //                    FColor(255,0,0)
+    //                    );
     
     //float deltaAngle = GetAngleBetween(GetActorForwardVector(), Target->GetActorLocation());
     if (Target != nullptr)
