@@ -17,7 +17,7 @@ void AAgentSlickPlayerController::PlayerTick(float DeltaTime)
 	Super::PlayerTick(DeltaTime);
 
 	// keep updating the destination every tick while desired
-	if (bMoveToMouseCursor)
+	if (bMoveEnabled && bMoveToMouseCursor)
 	{
 		MoveToMouseCursor();
 	}
@@ -51,15 +51,18 @@ void AAgentSlickPlayerController::MoveToMouseCursor()
 
 void AAgentSlickPlayerController::MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
-	FVector2D ScreenSpaceLocation(Location);
-
-	// Trace to see what is under the touch location
-	FHitResult HitResult;
-	GetHitResultAtScreenPosition(ScreenSpaceLocation, CurrentClickTraceChannel, true, HitResult);
-	if (HitResult.bBlockingHit)
+	if (bMoveEnabled)
 	{
-		// We hit something, move there
-		SetNewMoveDestination(HitResult.ImpactPoint);
+		FVector2D ScreenSpaceLocation(Location);
+
+		// Trace to see what is under the touch location
+		FHitResult HitResult;
+		GetHitResultAtScreenPosition(ScreenSpaceLocation, CurrentClickTraceChannel, true, HitResult);
+		if (HitResult.bBlockingHit)
+		{
+			// We hit something, move there
+			SetNewMoveDestination(HitResult.ImpactPoint);
+		}
 	}
 }
 

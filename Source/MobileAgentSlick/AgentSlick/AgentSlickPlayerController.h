@@ -16,6 +16,9 @@ class MOBILEAGENTSLICK_API AAgentSlickPlayerController : public APlayerControlle
 public:
 	AAgentSlickPlayerController();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Movement")
+	bool bMoveEnabled = true;
+
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
