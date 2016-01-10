@@ -16,12 +16,17 @@ class MOBILEAGENTSLICK_API AAgentSlickPlayerController : public APlayerControlle
 public:
 	AAgentSlickPlayerController();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	/** True if the controlled character should navigate to the mouse cursor. */
+	uint32 bMoveToMouseCursor : 1;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Movement")
 	bool bMoveEnabled = true;
 
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	/** Navigate player to the given world location. */
+	void SetNewMoveDestination(const FVector DestLocation);
 protected:
-	/** True if the controlled character should navigate to the mouse cursor. */
-	uint32 bMoveToMouseCursor : 1;
 
 	// Begin PlayerController interface
 	virtual void PlayerTick(float DeltaTime) override;
@@ -34,8 +39,6 @@ protected:
 	/** Navigate player to the current touch location. */
 	void MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location);
 
-	/** Navigate player to the given world location. */
-	void SetNewMoveDestination(const FVector DestLocation);
 
 	/** Input handlers for SetDestination action. */
 	void OnSetDestinationPressed();

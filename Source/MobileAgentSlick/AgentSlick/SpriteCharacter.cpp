@@ -20,5 +20,6 @@ ASpriteCharacter::ASpriteCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 640.f, 0.f);
 	GetCharacterMovement()->bConstrainToPlane = true;
 	GetCharacterMovement()->bSnapToPlaneAtStart = true;
+	GetCharacterMovement()->MaxWalkSpeed = 1800.f;
 
 }
